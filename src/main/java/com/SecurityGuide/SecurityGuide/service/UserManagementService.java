@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -124,7 +125,7 @@ public class UserManagementService {
     }
 
 
-    public ReqRes getUserById(Integer id) {
+    public ReqRes getUsersById(Integer id) {
         ReqRes reqRes = new ReqRes();
         try {
             SystemUsers usersById = usersRepo.findById(id).orElseThrow(() -> new RuntimeException("User Not found"));

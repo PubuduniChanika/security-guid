@@ -15,8 +15,9 @@ import java.util.function.Function;
 
 @Component
 public class JWTUtil {
+
     private SecretKey Key;
-    private static final long EXPIRATION_TIME = 86400000;
+    private  static  final long EXPIRATION_TIME = 86400000;  //24 hours
 
     public JWTUtil(){
         String secreteString = "843567893696976453275974432697R634976R738467TR678T34865R6834R8763T478378637664538745673865783678548735687R3";
@@ -28,23 +29,22 @@ public class JWTUtil {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(Key)
                 .compact();
     }
-
-    public String generateRefreshToken(HashMap<String, Object> claims, UserDetails userDetails){
+    public  String generateRefreshToken(HashMap<String, Object> claims, UserDetails userDetails){
         return Jwts.builder()
                 .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(Key)
                 .compact();
     }
 
-    public String extractUsername(String token){
-        return extractClaims(token, Claims::getSubject);
+    public  String extractUsername(String token){
+        return  extractClaims(token, Claims::getSubject);
     }
 
     private <T> T extractClaims(String token, Function<Claims, T> claimsTFunction){
@@ -59,5 +59,6 @@ public class JWTUtil {
     public  boolean isTokenExpired(String token){
         return extractClaims(token, Claims::getExpiration).before(new Date());
     }
+
 
 }
